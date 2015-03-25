@@ -1,19 +1,28 @@
 # yii2-mongodb-types
-Расширение класса [yii\base\Behavior](https://github.com/yiisoft/yii2/blob/master/framework/base/Behavior.php)
-для преобразования типов атрибутов модели mongoDb.
-##### Преобразуемые типы.
-* integer
-* float
-* boolean  
-
-##### Настройка событий.
+Extension of the class [yii\base\Behavior](https://github.com/yiisoft/yii2/blob/master/framework/base/Behavior.php) to convert attribute for all simple [types](https://github.com/yiisoft/yii2/blob/master/framework/base/Behavior.php) and mongoDb types.
+##### Example of a call from the model.
 ```php
-public function events()
+public function behaviors()
     {
         return [
-            ActiveRecord::EVENT_BEFORE_INSERT => 'convert',
-            ActiveRecord::EVENT_BEFORE_UPDATE => 'convert',
+            [
+                'class' => AttributeTypeBehavior::className(),
+                'attributes' => [
+                    '_id' => 'MongoId',
+                ],
+                'events' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => 'convert',
+                ],
+            ]
         ];
     }
+```  
+##### Example add convert MongoDate type.
+Add `attributes => ['date' => 'MongoDate']`  
+Add a method to the class AttributeTypeBehavior:
+```php
+    private function setMongoDate(&$value)
+    {
+        $value = new \MongoDate(strtotime($value));
+    }
 ```
-Ключом возвращаемого массива является поведением ([варианты](https://github.com/yiisoft/yii2/blob/master/framework/db/BaseActiveRecord.php)) при котором вызывается метод указанный в значении. 
