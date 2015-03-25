@@ -6,6 +6,17 @@
 * float
 * boolean  
 
+##### Вызов из модели.
+```php
+public function behaviors()
+    {
+        return [
+            [
+                'class' => AttributeTypeBehavior::className()
+            ],
+        ];
+    }
+```
 ##### Настройка событий.
 ```php
 public function events()
