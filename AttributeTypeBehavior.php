@@ -6,10 +6,9 @@
  * Time: 11:11
  */
 
-namespace consultnn\behaviors;
+namespace common\behaviors;
 
 use yii\base\Behavior;
-use yii\db\ActiveRecord;
 use yii\validators\BooleanValidator;
 use yii\validators\NumberValidator;
 
@@ -27,16 +26,19 @@ class AttributeTypeBehavior extends Behavior
      * @var array [{attributeName} => {attributeType}]
      */
     public $attributes = [];
+    
+    /**
+     *
+     * @var array [{eventType} => {methodName}]
+     */
+    public $events = [];
 
     /**
      * @inheritdoc
      */
     public function events()
     {
-        return [
-            ActiveRecord::EVENT_BEFORE_INSERT => 'convert',
-            ActiveRecord::EVENT_BEFORE_UPDATE => 'convert',
-        ];
+        return $this->events;
     }
 
     /**
@@ -89,14 +91,14 @@ class AttributeTypeBehavior extends Behavior
                 if ($this->hasMethod($methodName)) {
                     $this->$methodName($value);
                 } else {
-                    settype($value, $type);
+                    $this->setType($value, $type);
                 }
                 $this->owner->$attribute = $value;
             }
         }
     }
 
-    private function setType(&$value)
+    private function setType(&$value, $type)
     {
         settype($value, $type);
     }
