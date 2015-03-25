@@ -6,7 +6,7 @@
  * Time: 12:45
  */
 
-namespace consultnn\behaviors;
+namespace consultnn\mongoTypes;
 
 
 use yii\base\Exception;
