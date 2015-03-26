@@ -21,6 +21,13 @@ use yii\validators\NumberValidator;
 class AttributeTypeBehavior extends Behavior
 {
     /**
+     * Simple types is default
+     */
+    const TYPE_INTEGER = 'integer';
+    const TYPE_FLOAT = 'float';
+    const TYPE_BOOLEAN = 'boolean';
+    
+    /**
      * supported types:
      *  all simple types http://php.net/manual/ru/function.settype.php
      *  MongoId
@@ -63,12 +70,12 @@ class AttributeTypeBehavior extends Behavior
             $attributes = $validator->attributes;
             if ($validator instanceof NumberValidator) {
                 if ($validator->integerOnly) {
-                    $this->addAttributes($attributes, 'integer');
+                    $this->addAttributes($attributes, self::TYPE_INTEGER);
                 } else {
-                    $this->addAttributes($attributes, 'float');
+                    $this->addAttributes($attributes, self::TYPE_FLOAT);
                 }
             } elseif ($validator instanceof BooleanValidator) {
-                $this->addAttributes($attributes, 'boolean');
+                $this->addAttributes($attributes, self::TYPE_BOOLEAN);
             }
         }
     }
