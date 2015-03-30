@@ -159,8 +159,4 @@ class TreeViewBehavior extends Behavior
             $object->updateAttributes(['position' => ++$position]);
         }
     }
-
-
-
-
 }
