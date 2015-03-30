@@ -1,0 +1,30 @@
+{
+	"name": "consultnn/behaviors/yii2-tree",
+	"description": "Yii2 treeview extension",
+	"keywords": ["ConsultNN", "Yii2", "TreeView"],
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "ICC Ltd.",
+			"email": "tech@consultnn.ru",
+			"homepage": "http://consultnn.ru"
+		},
+		{
+			"name": "Artem Leksanov",
+			"email": "52lexanov@gmail.com",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"php": ">=5.4.0",
+		"bower-asset/jstree": "3.0.6"
+	},
+	"autoload": {
+		"psr-4": {
+			"consultnn\\treeview\\": "."
+		}
+	},
+	"support": {
+		"email": "tech@consultnn.ru"
+	}
+}
