@@ -39,7 +39,7 @@ class AttributeTypeBehavior extends Behavior
      *
      * @var array [{eventType} => {methodName}]
      */
-    public $events = [
+    private $events = [
         ActiveRecord::EVENT_BEFORE_INSERT => 'convert',
         ActiveRecord::EVENT_BEFORE_UPDATE => 'convert',
     ];
