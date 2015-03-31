@@ -1,6 +1,7 @@
 # yii2-behaviors
-### yii2-mongodb-types
-Extension of the class [yii\base\Behavior](https://github.com/yiisoft/yii2/blob/master/framework/base/Behavior.php) to convert attribute for all simple [types](https://github.com/yiisoft/yii2/blob/master/framework/base/Behavior.php) and mongoDb types.
+Extension of the class [yii\base\Behavior](https://github.com/yiisoft/yii2/blob/master/framework/base/Behavior.php)
+#####Class **AttributeTypeBehavior** to converts attribute for all simple [types](https://github.com/yiisoft/yii2/blob/master/framework/base/Behavior.php) and mongoDb types.   
+Number and boolean type taken from the corresponding attribute validator
 ##### Example of a call from the model.
 ```php
     public function behaviors()
@@ -25,3 +26,4 @@ Add a method to the class AttributeTypeBehavior:
         $value = new \MongoDate(strtotime($value));
     }
 ```
+#####Class **TreeViewBehavior** 
