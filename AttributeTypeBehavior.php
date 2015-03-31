@@ -26,6 +26,7 @@ class AttributeTypeBehavior extends Behavior
     const TYPE_INTEGER = 'integer';
     const TYPE_FLOAT = 'float';
     const TYPE_BOOLEAN = 'boolean';
+    const TYPE_MONGO_ID = 'MongoId';
     
     /**
      * supported types:
@@ -36,19 +37,14 @@ class AttributeTypeBehavior extends Behavior
     public $attributes = [];
     
     /**
-     * @var array [{eventType} => {methodName}]
-     */
-    private $events = [
-        ActiveRecord::EVENT_BEFORE_INSERT => 'convert',
-        ActiveRecord::EVENT_BEFORE_UPDATE => 'convert',
-    ];
-
-    /**
      * @inheritdoc
      */
     public function events()
     {
-        return $this->events;
+        return [
+            ActiveRecord::EVENT_BEFORE_INSERT => 'convert',
+            ActiveRecord::EVENT_BEFORE_UPDATE => 'convert',
+        ];
     }
 
     /**
