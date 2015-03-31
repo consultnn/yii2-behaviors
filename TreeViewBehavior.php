@@ -6,7 +6,7 @@
  * Time: 10:16
  */
 
-namespace consultnn\behaviors\treeview;
+namespace consultnn\behaviors;
 
 use yii\base\Behavior;
 use yii\db\ActiveRecord;

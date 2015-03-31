@@ -6,7 +6,7 @@
  * Time: 11:11
  */
 
-namespace consultnn\behaviors\mongoTypes;
+namespace consultnn\behaviors;
 
 use yii\base\Behavior;
 use yii\db\ActiveRecord;
