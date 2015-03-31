@@ -28,5 +28,5 @@ Add a method to the class AttributeTypeBehavior:
     }
 ```
 ***
-###Class **TreeViewBehavior** to dynamically update data in the database with the use of plug-in [jstree](https://github.com/vakata/jstree)
+###Class **TreeViewBehavior** to dynamically update the model attributes with the use of plug-in [jstree](https://github.com/vakata/jstree)
 Events `ActiveRecord::EVENT_BEFORE_INSERT`, `ActiveRecord::EVENT_BEFORE_UPDATE`, `ActiveRecord::EVENT_BEFORE_DELETE`
