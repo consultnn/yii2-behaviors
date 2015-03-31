@@ -83,7 +83,7 @@ class TreeViewBehavior extends Behavior
         return $this->owner->save();
     }
 
-    public function setPosition($event)
+    public function setPosition()
     {
         $this->calculatePosition();
     }
