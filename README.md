@@ -11,7 +11,7 @@ Number and boolean type taken from the corresponding attribute validator
             [
                 'class' => AttributeTypeBehavior::className(),
                 'attributes' => [
-                    '_id' => 'MongoId',
+                    '_id' => AttributeTypeBehavior::TYPE_MONGO_ID,
                 ]
             ]
         ];
