@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sokrat
- * Date: 16.09.14
- * Time: 11:11
- */
-
 namespace consultnn\behaviors;
 
 use yii\base\Behavior;
@@ -35,16 +28,18 @@ class AttributeTypeBehavior extends Behavior
      * @var array [{attributeName} => {attributeType}]
      */
     public $attributes = [];
+
+    public $events = [
+        ActiveRecord::EVENT_BEFORE_INSERT,
+        ActiveRecord::EVENT_BEFORE_UPDATE
+    ]
     
     /**
      * @inheritdoc
      */
     public function events()
     {
-        return [
-            ActiveRecord::EVENT_BEFORE_INSERT => 'convert',
-            ActiveRecord::EVENT_BEFORE_UPDATE => 'convert',
-        ];
+        return array_fill_keys($this->events, 'convert');
     }
 
     /**
