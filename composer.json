@@ -1,0 +1,19 @@
+{
+    "name": "consultnn/yii2-behaviors",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "ICC",
+            "email": "tech@consultnn.ru"
+        },
+        {
+          "name": "Sergey Sipatov",
+          "email": "sipatov@consultnn.ru",
+          "role": "Developer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.4.0"
+    }
+}
