@@ -20,11 +20,12 @@ class TreeViewBehavior extends Behavior
 {
     public $parentAttribute = 'parent_id';
     public $positionAttribute = 'position';
+    public $levelAttribute = 'level';
 
     public $events = [
         ActiveRecord::EVENT_BEFORE_DELETE => 'beforeDelete',
-        ActiveRecord::EVENT_BEFORE_INSERT => 'setPosition',
-        ActiveRecord::EVENT_BEFORE_UPDATE => 'setPosition',
+        ActiveRecord::EVENT_BEFORE_INSERT => 'beforeSave',
+        ActiveRecord::EVENT_BEFORE_UPDATE => 'beforeSave',
     ];
 
     public function events()
@@ -83,9 +84,23 @@ class TreeViewBehavior extends Behavior
         return $this->owner->save();
     }
 
-    public function setPosition()
+    public function beforeSave()
     {
         $this->calculatePosition();
+        $this->setLevel();
+    }
+
+    public function setLevel()
+    {
+        if (!$this->owner->hasAttribute($this->levelAttribute)) {
+            return;
+        }
+        
+        if (empty($this->owner->parent_id)) {
+            $this->owner->{$this->levelAttribute} = 1;
+        } else {
+            $this->owner->{$this->levelAttribute} = $this->owner->findOne($this->owner->parent_id)->{$this->levelAttribute} + 1;
+        }
     }
 
     /**
