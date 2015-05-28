@@ -38,8 +38,7 @@ class TreeViewBehavior extends Behavior
      */
     public function beforeDelete()
     {
-        /** @var ActiveRecord[] $children */
-        $children = $this->owner->findAll([$this->parentAttribute => $this->owner->getPrimaryKey()]);
+        $children = $this->getChildren();
         if (!empty($children)) {
             foreach ($children as $child) {
                 $child->delete();
@@ -52,7 +51,7 @@ class TreeViewBehavior extends Behavior
      */
     public function hasChildren()
     {
-        return $this->owner->findOne([$this->parentAttribute => $this->owner->getPrimaryKey()]) != null;
+        return $this->owner->find()->count([$this->parentAttribute => $this->owner->getPrimaryKey()]) !== 0;
     }
 
     /**

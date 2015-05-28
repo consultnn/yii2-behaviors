@@ -20,6 +20,7 @@ class AttributeTypeBehavior extends Behavior
     const TYPE_FLOAT = 'float';
     const TYPE_BOOLEAN = 'boolean';
     const TYPE_MONGO_ID = 'MongoId';
+    const TYPE_MONGO_IDS = 'MongoIds';
     
     /**
      * supported types:
@@ -111,5 +112,12 @@ class AttributeTypeBehavior extends Behavior
        } else {
            throw new TypeException();
        }
+    }
+
+    private function setMongoIds(&$value)
+    {
+        foreach ($value as &$id) {
+            $this->setMongoId($id);
+        }
     }
 }
