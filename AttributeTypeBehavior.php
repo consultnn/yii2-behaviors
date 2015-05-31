@@ -87,6 +87,11 @@ class AttributeTypeBehavior extends Behavior
     private function convertAttributes()
     {
         foreach ($this->attributes as $attribute => $type) {
+
+            if ($this->owner->$attribute === '') {
+                $this->owner->$attribute = null;
+            }
+
             if ($this->owner->$attribute !== null) {
                 $value = $this->owner->$attribute;
                 $methodName = 'set'.$type;
@@ -107,11 +112,11 @@ class AttributeTypeBehavior extends Behavior
 
     private function setMongoId(&$value)
     {
-       if (\MongoId::isValid($value)) {
+        if (\MongoId::isValid($value)) {
            $value = new \MongoId($value);
-       } else {
+        } else {
            throw new TypeException();
-       }
+        }
     }
 
     private function setMongoIds(&$value)
