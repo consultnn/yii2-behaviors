@@ -67,6 +67,39 @@ class TreeViewBehavior extends Behavior
     }
 
     /**
+     * @return bool
+     */
+    public function hasParent()
+    {
+        return $this->owner->{$this->parentAttribute} !== null;
+    }
+
+    /**
+     * @return null|ActiveRecord
+     */
+    public function getParent()
+    {
+        if ($this->hasParent()) {
+            return $this->owner->findOne($this->owner->{$this->parentAttribute});
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * @return ActiveRecord[]|[]
+     */
+    public function getParents()
+    {
+        $parents = [];
+        $parent = $this;
+        while ($parent = $parent->getParent()) {
+            $parents[] = $parent;
+        }
+        return $parents;
+    }
+
+    /**
      * @param string|null $parent
      * @param int $position
      * @return bool
