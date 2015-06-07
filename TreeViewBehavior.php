@@ -61,7 +61,7 @@ class TreeViewBehavior extends Behavior
     {
         return $this->owner
             ->find()
-            ->where([$this->parentAttribute => $this->owner->getPrimaryKey()])
+            ->andWhere([$this->parentAttribute => $this->owner->getPrimaryKey()])
             ->orderBy('position')
             ->all();
     }
@@ -181,7 +181,7 @@ class TreeViewBehavior extends Behavior
      */
     private function setMinPosition()
     {
-        $min = $this->owner->find()->where([$this->parentAttribute => $this->owner->getPrimaryKey()])->min('position');
+        $min = $this->owner->find()->andWhere([$this->parentAttribute => $this->owner->getPrimaryKey()])->min('position');
         $minPosition = $min / 2;
 
         if (!$min) {
@@ -201,7 +201,7 @@ class TreeViewBehavior extends Behavior
         $position = 0;
 
         /** @var ActiveRecord[] $objects */
-        $objects = $this->owner->find()->where([$this->parentAttribute => $this->owner->getPrimaryKey()])->orderBy('position')->all();
+        $objects = $this->owner->find()->andWhere([$this->parentAttribute => $this->owner->getPrimaryKey()])->orderBy('position')->all();
         foreach ($objects as $object) {
             $object->updateAttributes(['position' => ++$position]);
         }
