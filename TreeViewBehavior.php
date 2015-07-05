@@ -51,7 +51,7 @@ class TreeViewBehavior extends Behavior
      */
     public function hasChildren()
     {
-        return $this->owner->find()->count([$this->parentAttribute => $this->owner->getPrimaryKey()]) !== 0;
+        return $this->owner->find()->andWhere([$this->parentAttribute => $this->owner->getPrimaryKey()])->count() !== 0;
     }
 
     /**
