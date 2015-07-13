@@ -12,6 +12,7 @@ Number and boolean type taken from the corresponding attribute validator
                 'class' => AttributeTypeBehavior::className(),
                 'attributes' => [
                     '_id' => AttributeTypeBehavior::TYPE_MONGO_ID,
+                    'attribute1' => [AttributeTypeBehavior::TYPE_ARRAY_OF => AttributeTypeBehavior::TYPE_INTEGER]
                 ]
             ]
         ];
