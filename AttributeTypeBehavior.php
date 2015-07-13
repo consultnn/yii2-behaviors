@@ -21,7 +21,8 @@ class AttributeTypeBehavior extends Behavior
     const TYPE_BOOLEAN = 'boolean';
     const TYPE_MONGO_ID = 'MongoId';
     const TYPE_MONGO_IDS = 'MongoIds';
-    
+    const TYPE_ARRAY_OF = 'arrayOf';
+
     /**
      * supported types:
      *  all simple types http://php.net/manual/ru/function.settype.php
@@ -34,7 +35,7 @@ class AttributeTypeBehavior extends Behavior
         ActiveRecord::EVENT_BEFORE_INSERT,
         ActiveRecord::EVENT_BEFORE_UPDATE
     ];
-    
+
     /**
      * @inheritdoc
      */
@@ -89,12 +90,17 @@ class AttributeTypeBehavior extends Behavior
         foreach ($this->attributes as $attribute => $type) {
             if ($this->owner->$attribute !== null) {
                 $value = $this->owner->$attribute;
-                $methodName = 'set'.$type;
-                if ($this->hasMethod($methodName)) {
+
+                $methodName = $this->getMethodByType($type);
+
+                if ($methodName === 'setArrayOf') {
+                    $this->setArrayOf($value, $type);
+                } elseif ($this->hasMethod($methodName)) {
                     $this->$methodName($value);
                 } else {
                     $this->setType($value, $type);
                 }
+
                 $this->owner->$attribute = $value;
             }
         }
@@ -110,16 +116,53 @@ class AttributeTypeBehavior extends Behavior
         if (empty($value)) {
             $value = null;
         } elseif (\MongoId::isValid($value)) {
-           $value = new \MongoId($value);
+            $value = new \MongoId($value);
         } else {
-           throw new TypeException();
+            throw new TypeException();
         }
     }
 
+    /**
+     * @param $value
+     * @throws TypeException
+     * @deprecated Use self::TYPE_ARRAY_OF
+     */
     private function setMongoIds(&$value)
     {
         foreach ($value as &$id) {
             $this->setMongoId($id);
         }
+    }
+
+    private function setArrayOf(&$valueArg, $typeArg)
+    {
+        if (is_array($valueArg)) {
+            $type = current($typeArg);
+
+            foreach ($valueArg as $key=>$value) {
+
+                $methodName = 'set'.$type;
+
+                if ($this->hasMethod($methodName)) {
+                    $this->$methodName($valueArg[$key]);
+                } else {
+                    $this->setType($valueArg[$key], $type);
+                }
+            }
+        }
+
+    }
+
+    private function getMethodByType($type)
+    {
+        $methodName = 'set'.$type;
+
+        if (is_array($type)) {
+            if (key($type) === self::TYPE_ARRAY_OF) {
+                $methodName = 'setArrayOf';
+            }
+        }
+
+        return $methodName;
     }
 }
