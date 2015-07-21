@@ -106,10 +106,13 @@ class TreeViewBehavior extends Behavior
      */
     public function move($parent = null, $position = null)
     {
-        if ($parent == $this->owner->getPrimaryKey()) {
+        if ($parent == (string)$this->owner->getPrimaryKey()) {
             return false;
         }
 
+        if (empty($parent)) {
+            $parent = null;
+        }
         $this->owner->{$this->parentAttribute} = $parent;
         $this->calculatePosition($position);
 
@@ -181,7 +184,7 @@ class TreeViewBehavior extends Behavior
      */
     private function setMinPosition()
     {
-        $min = $this->owner->find()->andWhere([$this->parentAttribute => $this->owner->getPrimaryKey()])->min('position');
+        $min = $this->owner->find()->andWhere([$this->parentAttribute => $this->owner->{$this->parentAttribute}])->min('position');
         $minPosition = $min / 2;
 
         if (!$min) {
