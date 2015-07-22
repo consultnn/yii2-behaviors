@@ -106,10 +106,6 @@ class TreeViewBehavior extends Behavior
      */
     public function move($parent = null, $position = null)
     {
-        if ($parent == (string)$this->owner->getPrimaryKey()) {
-            return false;
-        }
-
         if (empty($parent)) {
             $parent = null;
         }
@@ -204,7 +200,7 @@ class TreeViewBehavior extends Behavior
         $position = 0;
 
         /** @var ActiveRecord[] $objects */
-        $objects = $this->owner->find()->andWhere([$this->parentAttribute => $this->owner->getPrimaryKey()])->orderBy('position')->all();
+        $objects = $this->owner->find()->andWhere([$this->parentAttribute => $this->owner->{$this->parentAttribute}])->orderBy('position')->all();
         foreach ($objects as $object) {
             $object->updateAttributes(['position' => ++$position]);
         }
