@@ -198,7 +198,6 @@ class TreeViewBehavior extends Behavior
     private function updatePositions()
     {
         $position = 0;
-
         /** @var ActiveRecord[] $objects */
         $objects = $this->owner->find()->andWhere([$this->parentAttribute => $this->owner->{$this->parentAttribute}])->orderBy('position')->all();
         foreach ($objects as $object) {
