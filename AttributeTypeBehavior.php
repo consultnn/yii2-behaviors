@@ -79,7 +79,7 @@ class AttributeTypeBehavior extends Behavior
      */
     private function addAttributes($attributes, $type)
     {
-        $this->attributes = array_merge(array_fill_keys($attributes, $type),$this->attributes);
+        $this->attributes = array_merge(array_fill_keys($attributes, $type), $this->attributes);
     }
 
     /**
@@ -129,7 +129,7 @@ class AttributeTypeBehavior extends Behavior
      */
     private function setMongoIds(&$value)
     {
-        foreach ($value as &$id) {
+        foreach ((array)$value as &$id) {
             $this->setMongoId($id);
         }
     }
@@ -139,8 +139,7 @@ class AttributeTypeBehavior extends Behavior
         if (is_array($valueArg)) {
             $type = current($typeArg);
 
-            foreach ($valueArg as $key=>$value) {
-
+            foreach ($valueArg as $key => $value) {
                 $methodName = 'set'.$type;
 
                 if ($this->hasMethod($methodName)) {
