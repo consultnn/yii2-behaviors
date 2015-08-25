@@ -129,9 +129,13 @@ class AttributeTypeBehavior extends Behavior
      */
     private function setMongoIds(&$value)
     {
-        foreach ((array)$value as &$id) {
-            $this->setMongoId($id);
+        if (!empty($value)) {
+            foreach ($value as &$id) {
+                $this->setMongoId($id);
+            }
+            var_dump($value);
         }
+
     }
 
     private function setArrayOf(&$valueArg, $typeArg)
