@@ -133,7 +133,6 @@ class AttributeTypeBehavior extends Behavior
             foreach ($value as &$id) {
                 $this->setMongoId($id);
             }
-            var_dump($value);
         }
 
     }
