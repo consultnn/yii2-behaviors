@@ -146,26 +146,23 @@ class TreeViewBehavior extends Behavior
             return $this->setMinPosition();
         }
 
-        $query = $this->owner->find();
-        $query->andWhere([$this->parentAttribute => $this->owner->{$this->parentAttribute}]);
-        if ($this->owner->getPrimaryKey()) {
-            $query->andWhere(['NOT IN', $this->owner->primaryKey(), $this->owner->getPrimaryKey()]);
-        }
-
-        $brothers =$query->orderBy('position')->offset($position - 1)->limit(2)->all();
+        $brothers = $this->getBrothers($position);
         switch (count($brothers)) {
+            // Moved in empty node
             case 0:
                 $this->setMinPosition();
                 break;
+            // Moved in end of node
             case 1:
                 $this->owner->{$this->positionAttribute} = ceil($brothers[0]->{$this->positionAttribute} + 1);
                 break;
+            // Other
             case 2:
                 list($prev, $next) = $brothers;
                 $rise = ($next->{$this->positionAttribute} - $prev->{$this->positionAttribute}) / 2;
-                if ($rise == 0) {
+                if ($rise === 0) {
                     $this->updatePositions();
-                    $this->calculatePosition(null, $position);
+                    $this->calculatePosition($position);
                 } else {
                     $this->owner->{$this->positionAttribute} = $prev->{$this->positionAttribute} + $rise;
                 }
@@ -180,12 +177,17 @@ class TreeViewBehavior extends Behavior
      */
     private function setMinPosition()
     {
-        $min = $this->owner->find()->andWhere([$this->parentAttribute => $this->owner->{$this->parentAttribute}])->min('position');
+        $min = $this->owner->find()->andWhere(
+            [
+                $this->parentAttribute => $this->owner->{$this->parentAttribute}
+            ]
+        )->min('position');
+
         $minPosition = $min / 2;
 
         if (!$min) {
             $this->owner->{$this->positionAttribute} = 1;
-        } elseif ($minPosition != 0) {
+        } elseif ($minPosition !== 0) {
             $this->owner->{$this->positionAttribute} = $minPosition;
         } else {
             $this->updatePositions();
@@ -199,9 +201,33 @@ class TreeViewBehavior extends Behavior
     {
         $position = 0;
         /** @var ActiveRecord[] $objects */
-        $objects = $this->owner->find()->andWhere([$this->parentAttribute => $this->owner->{$this->parentAttribute}])->orderBy('position')->all();
+        $objects = $this->owner->find()
+            ->andWhere(
+                [
+                    $this->parentAttribute => $this->owner->{$this->parentAttribute}
+                ]
+            )
+            ->orderBy('position')
+            ->all();
+
         foreach ($objects as $object) {
             $object->updateAttributes(['position' => ++$position]);
         }
+    }
+
+    /**
+     * @param int $position
+     * @return \yii\db\ActiveRecord[]
+     */
+    private function getBrothers($position)
+    {
+        $query = $this->owner->find();
+        $query->andWhere([$this->parentAttribute => $this->owner->{$this->parentAttribute}]);
+
+        if ($this->owner->getPrimaryKey()) {
+            $query->andWhere(['NOT IN', $this->owner->primaryKey(), $this->owner->getPrimaryKey()]);
+        }
+
+        return $query->orderBy('position')->offset($position - 1)->limit(2)->all();
     }
 }
