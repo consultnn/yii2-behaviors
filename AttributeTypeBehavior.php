@@ -33,7 +33,8 @@ class AttributeTypeBehavior extends Behavior
 
     public $events = [
         ActiveRecord::EVENT_BEFORE_INSERT,
-        ActiveRecord::EVENT_BEFORE_UPDATE
+        ActiveRecord::EVENT_BEFORE_UPDATE,
+        ActiveRecord::EVENT_BEFORE_VALIDATE,
     ];
 
     /**
