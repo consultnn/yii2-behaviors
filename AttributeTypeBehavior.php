@@ -16,12 +16,17 @@ class AttributeTypeBehavior extends Behavior
     /**
      * Simple types is default
      */
-    const TYPE_INTEGER = 'integer';
-    const TYPE_FLOAT = 'float';
-    const TYPE_BOOLEAN = 'boolean';
-    const TYPE_MONGO_ID = 'MongoId';
-    const TYPE_MONGO_IDS = 'MongoIds';
-    const TYPE_ARRAY_OF = 'arrayOf';
+    const TYPE_INTEGER      = 'integer';
+    const TYPE_STRING       = 'string';
+    const TYPE_FLOAT        = 'float';
+    const TYPE_BOOLEAN      = 'boolean';
+    const TYPE_MONGO_ID     = 'MongoId';
+    const TYPE_ARRAY_OF     = 'arrayOf';
+
+    /**
+     * @deprecated Use TYPE_ARRAY_OF
+     */
+    const TYPE_MONGO_IDS    = 'MongoIds';
 
     /**
      * supported types:
@@ -153,6 +158,8 @@ class AttributeTypeBehavior extends Behavior
                     $this->setType($valueArg[$key], $type);
                 }
             }
+        } else {
+            $valueArg = [];
         }
 
     }
