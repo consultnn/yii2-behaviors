@@ -10,6 +10,11 @@
           "name": "Sergey Sipatov",
           "email": "sipatov@consultnn.ru",
           "role": "Developer"
+        },
+        {
+          "name": "Maxim Mironyuk",
+          "email": "serieznyi@gmail.com",
+          "role": "Developer"
         }
     ],
     "minimum-stability": "dev",
@@ -25,5 +30,10 @@
     },
     "support": {
         "email": "tech@consultnn.ru"
-    }
+    },
+	"extra": {
+		"branch-alias": {
+			"dev-master": "1.0.x-dev"
+		}
+	}
 }
