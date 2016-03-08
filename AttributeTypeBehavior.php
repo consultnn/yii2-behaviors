@@ -24,11 +24,6 @@ class AttributeTypeBehavior extends Behavior
     const TYPE_ARRAY_OF     = 'arrayOf';
 
     /**
-     * @deprecated Use TYPE_ARRAY_OF
-     */
-    const TYPE_MONGO_IDS    = 'MongoIds';
-
-    /**
      * supported types:
      *  all simple types http://php.net/manual/ru/function.settype.php
      *  MongoId
@@ -96,84 +91,54 @@ class AttributeTypeBehavior extends Behavior
         foreach ($this->attributes as $attribute => $type) {
             if ($this->owner->$attribute !== null) {
                 $value = $this->owner->$attribute;
-
-                $methodName = $this->getMethodByType($type);
-
-                if ($methodName === 'setArrayOf') {
-                    $this->setArrayOf($value, $type);
-                } elseif ($this->hasMethod($methodName)) {
-                    $this->$methodName($value);
-                } else {
-                    $this->setType($value, $type);
-                }
-
-                $this->owner->$attribute = $value;
+                $this->owner->$attribute = $this->convertValue($value, $type);
             }
         }
     }
 
-    private function setType(&$value, $type)
+    private function convertValue($value, $type)
     {
-        settype($value, $type);
+        $params = null;
+        if (is_array($type)) {
+            $params = current($type);
+            $type = key($type);
+        }
+
+        $methodName = 'set'.$type;
+        if ($this->hasMethod($methodName)) {
+            $value = $this->$methodName($value, $params);
+        } else {
+            $value = $this->setType($value, $type);
+        }
+        return $value;
     }
 
-    private function setMongoId(&$value)
+    private function setType($value, $type)
+    {
+        settype($value, $type);
+        return $value;
+    }
+
+    private function setMongoId($value)
     {
         if (empty($value)) {
-            $value = null;
+            return null;
         } elseif (\MongoId::isValid($value)) {
-            $value = new \MongoId($value);
+            return new \MongoId($value);
         } else {
             throw new TypeException();
         }
     }
 
-    /**
-     * @param $value
-     * @throws TypeException
-     * @deprecated Use self::TYPE_ARRAY_OF
-     */
-    private function setMongoIds(&$value)
+    private function setArrayOf($array, $type)
     {
-        if (!empty($value)) {
-            foreach ($value as &$id) {
-                $this->setMongoId($id);
-            }
-        } else {
-            $value = [];
-        }
-    }
-
-    private function setArrayOf(&$valueArg, $typeArg)
-    {
-        if (is_array($valueArg)) {
-            $type = current($typeArg);
-
-            foreach ($valueArg as $key => $value) {
-                $methodName = 'set'.$type;
-
-                if ($this->hasMethod($methodName)) {
-                    $this->$methodName($valueArg[$key]);
-                } else {
-                    $this->setType($valueArg[$key], $type);
-                }
-            }
-        } else {
-            $valueArg = [];
+        if (!is_array($array)) {
+            return [];
         }
 
-    }
-
-    private function getMethodByType($type)
-    {
-        $methodName = 'set'.$type;
-
-        if (is_array($type)) {
-            if (key($type) === self::TYPE_ARRAY_OF) {
-                $methodName = 'setArrayOf';
-            }
+        foreach ($array as $key => $value) {
+            $array[$key] = $this->convertValue($value, $type);
         }
-
-        return $methodName;
+        return $array;
     }
 }
