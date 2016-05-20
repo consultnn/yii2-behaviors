@@ -108,12 +108,12 @@ class AttributeTypeBehavior extends Behavior
         if ($this->hasMethod($methodName)) {
             $value = $this->$methodName($value, $params);
         } else {
-            $value = $this->setType($value, $type);
+            $value = $this->castValue($value, $type);
         }
         return $value;
     }
 
-    private function setType($value, $type)
+    private function castValue($value, $type)
     {
         settype($value, $type);
         return $value;
