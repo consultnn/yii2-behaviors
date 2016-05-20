@@ -1,5 +1,13 @@
 {
     "name": "consultnn/yii2-behaviors",
+    "description": "Pack of Yii2 behaviors for Yii2 from ICC",
+    "keywords": [
+        "icc",
+        "yii",
+        "yii2",
+        "yii 2",
+        "behaviors"
+    ],
     "license": "MIT",
     "authors": [
         {
@@ -25,7 +33,7 @@
     },
     "autoload": {
         "psr-4": {
-            "consultnn\\behaviors\\": "."
+            "consultnn\\behaviors\\": "src"
         }
     },
     "support": {
