@@ -1,4 +1,7 @@
 # yii2-behaviors
+
+[![Build Status](https://travis-ci.org/consultnn/yii2-behaviors.svg?branch=2-new-major-version)](https://travis-ci.org/consultnn/yii2-behaviors)
+
 Extension of the class [yii\base\Behavior](https://github.com/yiisoft/yii2/blob/master/framework/base/Behavior.php)
 ***
 ###Class **AttributeTypeBehavior** to converts attribute for all simple [types](https://github.com/yiisoft/yii2/blob/master/framework/base/Behavior.php) and mongoDb types.   
