@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/consultnn/yii2-behaviors.svg?branch=2-new-major-version)](https://travis-ci.org/consultnn/yii2-behaviors)
 
+[![Software License](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](LICENSE.md)
+[![Yii2](https://img.shields.io/badge/Powered_by-Yii_Framework-green.svg?style=flat)](http://www.yiiframework.com/)
 Extension of the class [yii\base\Behavior](https://github.com/yiisoft/yii2/blob/master/framework/base/Behavior.php)
 ***
 ###Class **AttributeTypeBehavior** to converts attribute for all simple [types](https://github.com/yiisoft/yii2/blob/master/framework/base/Behavior.php) and mongoDb types.   
