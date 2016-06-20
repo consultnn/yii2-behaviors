@@ -1,6 +1,7 @@
 # yii2-behaviors
 
 [![Build Status](https://travis-ci.org/consultnn/yii2-behaviors.svg?branch=2-new-major-version)](https://travis-ci.org/consultnn/yii2-behaviors)
+[![Packagist](https://img.shields.io/packagist/v/consultnn/yii2-behaviors.svg?maxAge=2592000?style=plastic)](https://packagist.org/packages/consultnn/yii2-behaviors)
 
 [![Software License](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](LICENSE.md)
 [![Yii2](https://img.shields.io/badge/Powered_by-Yii_Framework-green.svg?style=flat)](http://www.yiiframework.com/)
