@@ -6,6 +6,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 ### Changed
 ### Deprecated
+- AttributeTypeBehavior. Use consultnn/yii2-validators
+
 ### Removed
 ### Fixed
 ### Security
