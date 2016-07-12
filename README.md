@@ -1,3 +1,6 @@
+## [We no longer maintain this repository]
+Use [consultnn/yii2-validators](https://github.com/consultnn/yii2-validators) instead AttributeTypeBehavior
+
 # yii2-behaviors
 Extension of the class [yii\base\Behavior](https://github.com/yiisoft/yii2/blob/master/framework/base/Behavior.php)
 ***
