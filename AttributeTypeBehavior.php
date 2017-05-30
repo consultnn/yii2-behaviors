@@ -1,6 +1,8 @@
 <?php
 namespace consultnn\behaviors;
 
+use MongoDB\BSON\ObjectID;
+use MongoDB\Driver\Exception\InvalidArgumentException;
 use yii\base\Behavior;
 use yii\db\ActiveRecord;
 use yii\validators\BooleanValidator;
@@ -123,10 +125,12 @@ class AttributeTypeBehavior extends Behavior
     {
         if (empty($value)) {
             return null;
-        } elseif (\MongoId::isValid($value)) {
-            return new \MongoId($value);
         } else {
-            throw new TypeException();
+            try {
+                return new ObjectID($value);
+            } catch (InvalidArgumentException $exception) {
+                throw new TypeException();
+            }
         }
     }
 
